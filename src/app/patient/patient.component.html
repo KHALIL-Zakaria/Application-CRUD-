@@ -1,0 +1,55 @@
+<div class="container spacer">
+  <div class="card spacer">
+    <div class="card-header">Consulter Patient</div>
+    <div class="card-body">
+      <form #f="ngForm" (ngSubmit)="onGetPatient(f.value)">
+        <label>Mot Clé :</label>
+        <input type="text" name="motcle" [(ngModel)]="motcle" ngModel/>
+        <button type="submit" class="btn-sm btn-success" >Chercher</button>
+      </form>
+
+      <div>
+        <div *ngFor="let a of patients?.name">
+          <table *ngIf="motcle!==''" class="table table-striped">
+            <tr>
+              <th>ID</th><th>Nom</th><th>Prénom</th><th>Date Naissance</th><th>Sexe</th><th>Phone</th><th>Edit</th><th>Delete</th>
+            </tr>
+            <tr>
+              <td>{{patients.id}}</td>
+              <td>{{a.family}}</td>
+              <td>{{a.given}}</td>
+              <td>{{patients.birthDate}}</td>
+              <td>{{patients.gender}}</td>
+              <td *ngFor="let c of patients?.telecom">{{c.value}}</td>
+              <td><a (click)="onEditPatient(patients.id)" class="clickable">Edit</a></td>
+              <td><a (click)="onDeletePatient(patients.id)" class="clickable">Delete</a></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div *ngFor="let a of patients?.entry">
+        <div *ngIf="motcle==''">
+          <table class="table table-striped">
+            <tr>
+              <th>ID</th><th>Nom</th><th>Prénom</th><th>Date Naissance</th><th>Sexe</th><th>Phone</th><th>Edit</th><th>Delete</th>
+            </tr>
+            <tr>
+              <td>{{a.resource.id}}</td>
+              <td *ngFor="let b of a.resource.name">{{b.family}}</td>
+              <td *ngFor="let b of a.resource.name">{{b.given}}</td>
+              <td>{{a.resource.birthDate}}</td>
+              <td>{{a.resource.gender}}</td>
+              <td *ngFor="let c of a.resource.telecom">{{c.value}}</td>
+              <td><a (click)="onEditPatient(a.resource.id)" class="clickable">Edit</a></td>
+              <td><a (click)="onDeletePatient(a.resource.id)" class="clickable">Delete</a></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
